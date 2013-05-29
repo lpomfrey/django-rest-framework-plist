@@ -4,12 +4,13 @@ from __future__ import unicode_literals
 import datetime
 import re
 from decimal import Decimal
+from plistlib import PlistWriter, PlistParser, Data
 
+from biplist import readPlist, is_stream_binary_plist
 from django.template.defaultfilters import escape
 from django.utils import dateparse
 from django.utils.encoding import smart_bytes, smart_text
 from django.utils.six import BytesIO, text_type
-from plistlib import PlistWriter, PlistParser, Data
 
 try:  # pragma: no cover
     from HTMLParser import HTMLParser
@@ -45,7 +46,7 @@ class RFPlistParser(PlistParser):
     def end_data(self):
         h = HTMLParser()
         value = h.unescape(smart_text(Data.fromBase64(self.getData()).data))
-        if value == '%%Python.None%%':
+        if value == '\0':
             self.addObject(None)
         else:
             self.addObject(value)
@@ -64,7 +65,7 @@ class RFPlistWriter(PlistWriter):
     def writeValue(self, value):
         DATETIME_TYPES = (datetime.datetime, datetime.date, datetime.time)
         if value is None:
-            self.simpleElement(b'data', Data('%%Python.None%%').asBase64())
+            self.simpleElement(b'data', Data('\0').asBase64())
         elif isinstance(value, DATETIME_TYPES):
             self.simpleElement(b'date', smart_bytes(value.isoformat()))
         elif isinstance(value, Decimal):
@@ -84,6 +85,8 @@ class RFPlistWriter(PlistWriter):
 def read(stream):
     if not isinstance(stream, BytesIO):
         stream = BytesIO(stream)
+    if is_stream_binary_plist(stream):
+        return readPlist(stream)
     stream.seek(0)
     return RFPlistParser().parse(stream)
 
