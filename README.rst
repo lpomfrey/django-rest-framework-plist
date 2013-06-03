@@ -15,8 +15,8 @@ It is largely based on `the msgpack implementation
 <https://github.com/juanriaza/django-rest-framework-msgpack>`_ by `Juan Riaza
 <http://juanriaza.com/>`_.
 
-How to install
-==============
+Installation
+============
 
 Install using ``pip``:
 
@@ -30,15 +30,12 @@ Install using ``pip``:
 
     $ git clone git@github.com:lpomfrey/django-rest-framework-plist.git
 
-How use it?
-===========
+Usage
+=====
 
-This package provides a renderer ``PlistRenderer`` and a parser ``PlistParser``.
+This package provides a renderer (``PlistRenderer``) and a parser (``PlistParser``).
 
-Setting the renderer and the parser
------------------------------------
-
-Just follow the documentation:
+See the REST framework documentation for details on enabling them:
 
 - `Setting the renderer 
   <http://django-rest-framework.org/api-guide/renderers.html#setting-the-renderers>`_.
@@ -71,6 +68,12 @@ To run the tests against the current environment::
 
 Changelog
 =========
+
+0.2.0
+-----
+**31st May 2013**
+
+* Version bump
 
 0.1.0
 -----
