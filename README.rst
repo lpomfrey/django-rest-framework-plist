@@ -1,11 +1,11 @@
 Django Rest Framework Plist
 =============================
 
-:Version: 0.2.0
-:Author: Luke Pomfrey
+.. image:: https://travis-ci.org/lpomfrey/django-rest-framework-plist.png?branch=master
+    :target: https://travis-ci.org/lpomfrey/django-rest-framework-plist
 
 Overview
-========
+--------
 
 This package provides `Plist <https://en.wikipedia.org/wiki/Property_list>`_ 
 serialization  support for `Django REST framework 
@@ -16,7 +16,7 @@ It is largely based on `the msgpack implementation
 <http://juanriaza.com/>`_.
 
 Installation
-============
+------------
 
 Install using ``pip``:
 
@@ -31,11 +31,14 @@ Install using ``pip``:
     $ git clone git@github.com:lpomfrey/django-rest-framework-plist.git
 
 Usage
-=====
+-----
 
 This package provides a renderer (``PlistRenderer``) and a parser (``PlistParser``).
 
-See the REST framework documentation for details on enabling them:
+Configuration
+-------------
+
+Just follow the documentation:
 
 - `Setting the renderer 
   <http://django-rest-framework.org/api-guide/renderers.html#setting-the-renderers>`_.
@@ -44,23 +47,17 @@ See the REST framework documentation for details on enabling them:
 
 
 ``rest_framework_plist.renderers.PlistRenderer``
----------------------------------------------------------
-
-Renders the request data into ``Plist``.
-
-:.media_type: ``application/x-plist``
-:.format: ``.plist``
+    Renders the request data into ``Plist``.
+    :.media_type: ``application/x-plist``
+    :.format: ``.plist``
 
 ``rest_framework_plist.parsers.PlistParser``
----------------------------------------------------------
-
-Parses ``Plist`` request content.
-
-:.media_type: ``application/x-plist``
+    Parses ``Plist`` request content.
+    :.media_type: ``application/x-plist``
 
 
 Running the tests
-=================
+-----------------
 
 To run the tests against the current environment::
 
