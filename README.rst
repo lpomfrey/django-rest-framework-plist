@@ -33,7 +33,8 @@ Install using ``pip``:
 Usage
 -----
 
-This package provides a renderer (``PlistRenderer``) and a parser (``PlistParser``).
+This package provides a renderer (``PlistRenderer``) and a parser 
+(``PlistParser``).
 
 Configuration
 -------------
@@ -48,20 +49,21 @@ Just follow the documentation:
 
 ``rest_framework_plist.renderers.PlistRenderer``
     Renders the request data into ``Plist``.
+    
     :.media_type: ``application/x-plist``
     :.format: ``.plist``
 
 ``rest_framework_plist.parsers.PlistParser``
     Parses ``Plist`` request content.
+    
     :.media_type: ``application/x-plist``
 
 
 Running the tests
 -----------------
 
-To run the tests against the current environment::
-
-    ./manage.py test
+After installing in a Virtualenv run the ``./run_tests.sh`` script in the root
+git directory.
 
 Changelog
 =========
