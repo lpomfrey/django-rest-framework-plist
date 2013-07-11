@@ -3,3 +3,6 @@ from distutils import version
 
 __version__ = '0.2.0'
 version_info = version.StrictVersion(__version__).version
+
+from .parsers import PlistParser  # NOQA
+from .renderers import PlistRenderer  # NOQA
