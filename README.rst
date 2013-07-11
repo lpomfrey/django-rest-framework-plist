@@ -1,19 +1,11 @@
 Django Rest Framework Plist
 =============================
 
+`Plist <https://en.wikipedia.org/wiki/Property_list>`_ serialization support 
+for `Django REST framework <http://django-rest-framework.org>`_.
+
 .. image:: https://travis-ci.org/lpomfrey/django-rest-framework-plist.png?branch=master
     :target: https://travis-ci.org/lpomfrey/django-rest-framework-plist
-
-Overview
---------
-
-This package provides `Plist <https://en.wikipedia.org/wiki/Property_list>`_ 
-serialization  support for `Django REST framework 
-<http://django-rest-framework.org>`_.
-
-It is largely based on `the msgpack implementation
-<https://github.com/juanriaza/django-rest-framework-msgpack>`_ by `Juan Riaza
-<http://juanriaza.com/>`_.
 
 Installation
 ------------
@@ -55,7 +47,6 @@ described in the django-rest-framework documentation:
     Parses ``Plist`` request content.
     
     :.media_type: ``application/x-plist``
-
 
 Running the tests
 -----------------
