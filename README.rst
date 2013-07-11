@@ -33,13 +33,11 @@ Install using ``pip``:
 Usage
 -----
 
-This package provides a renderer (``PlistRenderer``) and a parser 
-(``PlistParser``).
+This package provides a renderer (``rest_framework_plst.PlistRenderer``) and a 
+parser (``rest_framework_plist.PlistParser``).
 
-Configuration
--------------
-
-Just follow the documentation:
+Add the renderer and/or parser provided by this package to your settings, as 
+described in the django-rest-framework documentation:
 
 - `Setting the renderer 
   <http://django-rest-framework.org/api-guide/renderers.html#setting-the-renderers>`_.

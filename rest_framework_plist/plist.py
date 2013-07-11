@@ -58,7 +58,7 @@ class RFPlistParser(PlistParser):
 
 class RFPlistWriter(PlistWriter):
     '''
-    A Plist writer that supports None type objects and has better datetime
+    A Plist writer that supports ``None`` type objects and has better datetime
     support
     '''
 

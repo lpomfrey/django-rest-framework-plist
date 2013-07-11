@@ -15,6 +15,6 @@ class PlistRenderer(BaseRenderer):
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
         '''
-        Renders *obj* into serialized Plist.
+        Renders ``data`` into serialized Plist.
         '''
         return write(data)
