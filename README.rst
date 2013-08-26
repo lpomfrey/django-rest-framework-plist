@@ -4,8 +4,17 @@ Django Rest Framework Plist
 `Plist <https://en.wikipedia.org/wiki/Property_list>`_ serialization support 
 for `Django REST framework <http://django-rest-framework.org>`_.
 
+.. image:: https://badge.fury.io/py/django-rest-framework-plist.png
+    :target: http://badge.fury.io/py/django-rest-framework-plist
+
 .. image:: https://travis-ci.org/lpomfrey/django-rest-framework-plist.png?branch=master
     :target: https://travis-ci.org/lpomfrey/django-rest-framework-plist
+
+.. image:: https://coveralls.io/repos/lpomfrey/django-rest-framework-plist/badge.png?branch=master
+    :target: https://coveralls.io/r/lpomfrey/django-rest-framework-plist?branch=master
+
+.. image:: https://pypip.in/d/django-rest-framework-plist/badge.png
+        :target: https://crate.io/packages/django-rest-framework-plist?version=latest
 
 Installation
 ------------
