@@ -23,7 +23,7 @@ class PlistTests(TestCase):
     def _check_round_trip(self, obj, **kwargs):
         expected = kwargs.pop('expected', obj)
         content = self.renderer.render(obj, 'application/x-plist')
-        data = self.parser.parse(six.StringIO(content))
+        data = self.parser.parse(content)
         self.assertEquals(expected, data)
 
     def test_render_and_parse(self):

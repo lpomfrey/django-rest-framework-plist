@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 import datetime
 import re
@@ -8,9 +7,8 @@ from plistlib import PlistWriter, PlistParser, Data
 
 from biplist import readPlist, is_stream_binary_plist
 from django.template.defaultfilters import escape
-from django.utils import dateparse
-from django.utils.encoding import smart_bytes, smart_text
-from django.utils.six import BytesIO, text_type
+from django.utils import dateparse, six
+from django.utils.encoding import force_bytes, force_text
 
 try:  # pragma: no cover
     from HTMLParser import HTMLParser
@@ -45,15 +43,15 @@ class RFPlistParser(PlistParser):
 
     def end_data(self):
         h = HTMLParser()
-        value = h.unescape(smart_text(Data.fromBase64(self.getData()).data))
-        if value == '\0':
+        value = h.unescape(force_text(Data.fromBase64(self.getData()).data))
+        if value == r'\0':
             self.addObject(None)
         else:
             self.addObject(value)
 
     def end_string(self):
         h = HTMLParser()
-        self.addObject(h.unescape(smart_text(self.getData())))
+        self.addObject(h.unescape(force_text(self.getData())))
 
 
 class RFPlistWriter(PlistWriter):
@@ -65,33 +63,40 @@ class RFPlistWriter(PlistWriter):
     def writeValue(self, value):
         DATETIME_TYPES = (datetime.datetime, datetime.date, datetime.time)
         if value is None:
-            self.simpleElement(b'data', Data('\0').asBase64())
+            self.simpleElement('data', Data(r'\0').asBase64())
         elif isinstance(value, DATETIME_TYPES):
-            self.simpleElement(b'date', smart_bytes(value.isoformat()))
+            self.simpleElement('date', value.isoformat())
         elif isinstance(value, Decimal):
-            self.simpleElement(b'real', smart_bytes(value))
-        elif isinstance(value, text_type):
+            self.simpleElement(
+                'real',
+                force_text(value) if six.PY3 else force_bytes(value)
+            )
+        elif isinstance(value, six.text_type) and not six.PY3:
             if _CONTROL_CHARS.search(value):
                 # We can't represent the data as an ASCII string
                 self.simpleElement(
-                    b'data', Data(smart_bytes(escape(value))).asBase64())
+                    'data',
+                    Data(force_bytes(escape(value))).asBase64()
+                )
             else:
                 # Value can be represented as an ASCII string
-                self.simpleElement(b'string', smart_bytes(escape(value)))
+                self.simpleElement('string', force_bytes(escape(value)))
         else:
-            PlistWriter.writeValue(self, value)
+            PlistWriter.writeValue(
+                self, value if not six.PY3 else force_text(value))
 
 
 def read(stream):
-    if not isinstance(stream, BytesIO):
-        stream = BytesIO(stream)
+    if not isinstance(stream, six.BytesIO):
+        stream = six.BytesIO(stream)
     if is_stream_binary_plist(stream):
+        stream.seek(0)
         return readPlist(stream)
     stream.seek(0)
     return RFPlistParser().parse(stream)
 
 
 def write(data):
-    writer = RFPlistWriter(BytesIO())
+    writer = RFPlistWriter(six.BytesIO())
     writer.writeValue(data)
     return writer.file.getvalue()
