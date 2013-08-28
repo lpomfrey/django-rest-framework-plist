@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import re
 from decimal import Decimal
 from plistlib import PlistWriter, PlistParser, Data
 
@@ -14,12 +13,6 @@ try:  # pragma: no cover
     from HTMLParser import HTMLParser
 except ImportError:  # pragma: no cover
     from html.parser import HTMLParser
-
-
-_CONTROL_CHARS = re.compile(
-    r'[\x00\x01\x02\x03\x04\x05\x06\x07\x08\x0b\x0c\x0e\x0f\x10\x11\x12\x13'
-    r'\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f]'
-)
 
 
 class RFPlistParser(PlistParser):
@@ -44,14 +37,15 @@ class RFPlistParser(PlistParser):
     def end_data(self):
         h = HTMLParser()
         value = h.unescape(force_text(Data.fromBase64(self.getData()).data))
-        if value == r'\0':
-            self.addObject(None)
-        else:
-            self.addObject(value)
+        self.addObject(value)
 
     def end_string(self):
         h = HTMLParser()
-        self.addObject(h.unescape(force_text(self.getData())))
+        data = h.unescape(force_text(self.getData()))
+        if data == '__PyNone__':
+            self.addObject(None)
+        else:
+            self.addObject(data)
 
 
 class RFPlistWriter(PlistWriter):
@@ -62,28 +56,33 @@ class RFPlistWriter(PlistWriter):
 
     def writeValue(self, value):
         DATETIME_TYPES = (datetime.datetime, datetime.date, datetime.time)
-        if value is None:
-            self.simpleElement('data', Data(r'\0').asBase64())
-        elif isinstance(value, DATETIME_TYPES):
+        if isinstance(value, DATETIME_TYPES):
             self.simpleElement('date', value.isoformat())
         elif isinstance(value, Decimal):
             self.simpleElement(
                 'real',
                 force_text(value) if six.PY3 else force_bytes(value)
             )
-        elif isinstance(value, six.text_type) and not six.PY3:
-            if _CONTROL_CHARS.search(value):
-                # We can't represent the data as an ASCII string
-                self.simpleElement(
-                    'data',
-                    Data(force_bytes(escape(value))).asBase64()
-                )
-            else:
-                # Value can be represented as an ASCII string
-                self.simpleElement('string', force_bytes(escape(value)))
-        else:
-            PlistWriter.writeValue(
-                self, value if not six.PY3 else force_text(value))
+        elif isinstance(value, (six.text_type, six.binary_type)):
+            try:
+                data = escape(value)
+                if six.PY3:
+                    data = force_text(data)
+                else:
+                    data = force_bytes(data)
+                self.simpleElement('string', data)
+            except ValueError as e:
+                if 'contains control characters' in e.args[0]:
+                    data = Data(force_bytes(escape(value))).asBase64()
+                    if six.PY3:
+                        data = force_text(data)
+                    self.simpleElement('data', data)
+                else:
+                    raise
+        elif value is None:
+            self.simpleElement('string', '__PyNone__')
+        elif value:
+            PlistWriter.writeValue(self, value)
 
 
 def read(stream):

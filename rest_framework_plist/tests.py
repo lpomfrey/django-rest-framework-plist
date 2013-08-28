@@ -11,6 +11,10 @@ from rest_framework_plist.renderers import PlistRenderer
 from rest_framework_plist.parsers import PlistParser
 
 
+if not six.PY3:
+    chr = unichr
+
+
 class PlistTests(TestCase):
     '''
     Tests specific to the Plist Renderer and Parser
@@ -59,9 +63,8 @@ class PlistTests(TestCase):
         self._check_round_trip(obj)
 
     def test_unicode(self):
-        if not six.PY3:
-            chr = unichr
-        obj = {'my_unicode': ''.join(chr(x) for x in range(2000))}
+        chars = [chr(x) for x in range(2000)]
+        obj = {'my_unicode': ''.join(chars)}
         self._check_round_trip(obj)
 
         # ASCII only strings are represented as strings not data
