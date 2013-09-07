@@ -56,24 +56,3 @@ described in the django-rest-framework documentation:
     Parses ``Plist`` request content.
     
     :.media_type: ``application/x-plist``
-
-Running the tests
------------------
-
-After installing in a Virtualenv run the ``./run_tests.sh`` script in the root
-git directory.
-
-Changelog
-=========
-
-0.2.0
------
-**31st May 2013**
-
-* Version bump
-
-0.1.0
------
-**28th May 2013**
-
-* Initial release
