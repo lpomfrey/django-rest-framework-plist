@@ -4,5 +4,5 @@ from distutils import version
 __version__ = '0.2.3'
 version_info = version.StrictVersion(__version__).version
 
-from .parsers import PlistParser  # NOQA
-from .renderers import PlistRenderer  # NOQA
+from rest_framework_plist.parsers import PlistParser  # NOQA
+from rest_framework_plist.renderers import PlistRenderer  # NOQA
