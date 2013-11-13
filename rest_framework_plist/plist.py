@@ -7,12 +7,18 @@ from plistlib import PlistWriter, PlistParser, Data
 from biplist import readPlist, is_stream_binary_plist
 from django.template.defaultfilters import escape
 from django.utils import dateparse, six
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_text
 
 try:  # pragma: no cover
     from HTMLParser import HTMLParser
 except ImportError:  # pragma: no cover
     from html.parser import HTMLParser
+
+try:  # pragma: no cover
+    from django.utils.encoding import force_bytes
+except ImportError:  # pragma: no cover
+    # Django 1.4
+    from django.utils.encoding import smart_bytes as force_bytes  # NOQA
 
 
 class RFPlistParser(PlistParser):
