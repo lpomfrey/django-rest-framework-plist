@@ -34,7 +34,7 @@ Install using ``pip``:
 Usage
 -----
 
-This package provides a renderer (``rest_framework_plst.PlistRenderer``) and a 
+This package provides a renderer (``rest_framework_plist.PlistRenderer``) and a 
 parser (``rest_framework_plist.PlistParser``).
 
 Add the renderer and/or parser provided by this package to your settings, as 
@@ -46,13 +46,20 @@ described in the django-rest-framework documentation:
   <http://django-rest-framework.org/api-guide/parsers.html#setting-the-parsers>`_.
 
 
-``rest_framework_plist.renderers.PlistRenderer``
-    Renders the request data into ``Plist``.
-    
-    :.media_type: ``application/x-plist``
-    :.format: ``.plist``
++----------------------------------------+-------------------------+
+| ``rest_framework_plist.renderers.PlistRenderer``                 |
++========================================+=========================+
+| Renders the request data into ``Plist``.                         |
++----------------------------------------+-------------------------+
+| .media_type                            | ``application/x-plist`` |
++----------------------------------------+-------------------------+
+| .format                                | ``plist``               |
++----------------------------------------+-------------------------+
 
-``rest_framework_plist.parsers.PlistParser``
-    Parses ``Plist`` request content.
-    
-    :.media_type: ``application/x-plist``
++----------------------------------------+-------------------------+
+| ``rest_framework_plist.parsers.PlistParser``                     |
++========================================+=========================+
+| Parses ``Plist`` request content.                                |
++----------------------------------------+-------------------------+
+| .media_type                            | ``application/x-plist`` |
++----------------------------------------+-------------------------+
