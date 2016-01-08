@@ -23,7 +23,7 @@ if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'loads'):
             return {k: _clean(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
             return map(_clean, obj)
-        elif isinstance(obj, None):
+        elif obj is None:
             return b''
         elif isinstance(obj, six.string_types):
             return force_bytes(obj)
