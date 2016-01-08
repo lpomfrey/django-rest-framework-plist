@@ -20,7 +20,7 @@ if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'loads'):
         if isinstance(obj, datetime.date):
             return datetime.datetime.combine(obj, datetime.time.min)
         elif isinstance(obj, dict):
-            return _clean(obj)
+            return {k: _clean(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
             return map(_clean, obj)
         elif isinstance(obj, None):
