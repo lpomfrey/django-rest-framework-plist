@@ -22,7 +22,9 @@ if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'loads'):
         elif isinstance(obj, dict):
             return {k: _clean(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
-            return map(_clean, obj)
+            return [_clean(o) for o in obj]
+        elif isinstance(obj, Decimal):
+            return float(obj)
         elif obj is None:
             return b''
         elif isinstance(obj, six.string_types):
