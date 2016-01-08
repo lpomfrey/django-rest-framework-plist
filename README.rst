@@ -13,9 +13,6 @@ for `Django REST framework <http://django-rest-framework.org>`_.
 .. image:: https://coveralls.io/repos/lpomfrey/django-rest-framework-plist/badge.png?branch=master
     :target: https://coveralls.io/r/lpomfrey/django-rest-framework-plist?branch=master
 
-.. image:: https://pypip.in/d/djangorestframework-plist/badge.png
-        :target: https://crate.io/packages/djangorestframework-plist?version=latest
-
 Installation
 ------------
 
