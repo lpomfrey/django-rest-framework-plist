@@ -161,5 +161,3 @@ LOGGING = {
         },
     }
 }
-
-STATIC_PREPROCESSOR_ROOT = os.path.join(DIRNAME, 'processedstatic/')
