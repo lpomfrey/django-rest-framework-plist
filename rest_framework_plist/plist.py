@@ -11,12 +11,30 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.six.moves.html_parser import HTMLParser
 
 
+DATETIME_TYPES = (datetime.datetime, datetime.date, datetime.time)
+
+
 if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'loads'):
+
+    def _clean(obj):
+        if isinstance(obj, datetime.date):
+            return datetime.datetime.combine(obj, datetime.time.min)
+        elif isinstance(obj, dict):
+            return _clean(obj)
+        elif isinstance(obj, (list, tuple)):
+            return map(_clean, obj)
+        elif isinstance(obj, None):
+            return b''
+        elif isinstance(obj, six.string_types):
+            return force_bytes(obj)
+        else:
+            return obj
 
     def read(stream):
         return plistlib.loads(force_bytes(stream))
 
-    write = plistlib.dumps
+    def write(data):
+        return plistlib.dumps(_clean(data))
 
 else:
 
@@ -61,7 +79,6 @@ else:
         '''
 
         def writeValue(self, value):
-            DATETIME_TYPES = (datetime.datetime, datetime.date, datetime.time)
             if isinstance(value, DATETIME_TYPES):
                 self.simpleElement('date', value.isoformat())
             elif isinstance(value, Decimal):
