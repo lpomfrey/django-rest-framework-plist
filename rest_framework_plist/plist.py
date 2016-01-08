@@ -11,7 +11,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.six.moves.html_parser import HTMLParser
 
 
-if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'writes'):
+if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'loads'):
 
     def read(stream):
         return plistlib.loads(force_bytes(stream))
