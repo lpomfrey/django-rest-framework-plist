@@ -40,19 +40,27 @@ class PlistTests(TestCase):
 
     def test_datetime(self):
         obj = {'my_datetime': datetime.datetime.now()}
-        self._check_round_trip(obj)
+        self._check_round_trip(
+            obj, expected={'my_datetime': obj['my_datetime'].isoformat()}
+        )
 
     def test_date(self):
         obj = {'my_date': datetime.date.today()}
-        self._check_round_trip(obj)
+        self._check_round_trip(
+            obj, expected={'my_date': obj['my_date'].isoformat()}
+        )
 
     def test_time(self):
         obj = {'my_time': datetime.datetime.now().time()}
-        self._check_round_trip(obj)
+        self._check_round_trip(
+            obj, expected={'my_time': obj['my_time'].isoformat()}
+        )
 
     def test_decimal(self):
         obj = {'my_decimal': decimal.Decimal(1) / decimal.Decimal(7)}
-        self._check_round_trip(obj)
+        self._check_round_trip(
+            obj, expected={'my_decimal': float(obj['my_decimal'])}
+        )
 
     def test_none(self):
         obj = {'my_none': None}
