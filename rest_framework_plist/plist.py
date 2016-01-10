@@ -68,4 +68,17 @@ def read(stream):
 
 
 def write(data):
-    return biplist.writePlistToString(data)
+
+    def _clean(obj):
+        if isinstance(obj, DATETIME_TYPES):
+            return obj.isoformat()
+        elif isinstance(obj, dict):
+            return {k: _clean(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [_clean(o) for o in obj]
+        elif isinstance(obj, Decimal):
+            return float(obj)
+        else:
+            return obj
+
+    return biplist.writePlistToString(_clean(data))
