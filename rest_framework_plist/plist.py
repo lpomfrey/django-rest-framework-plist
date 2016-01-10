@@ -19,6 +19,8 @@ if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'loads'):
     def _clean(obj):
         if isinstance(obj, datetime.date):
             return datetime.datetime.combine(obj, datetime.time.min)
+        elif isinstance(obj, datetime.time):
+            return datetime.datetime.combine(datetime.date.min, obj)
         elif isinstance(obj, dict):
             return {k: _clean(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
