@@ -58,8 +58,8 @@ else:
     def loads(stream):
         return RFPlistParser().parse(stream)
 
-    def dumps(stream):
-        return biplist.writePlistToString(_clean(data))
+    def dumps(data):
+        return biplist.writePlistToString(data)
 
 
 def read(stream):
