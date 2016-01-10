@@ -3,6 +3,7 @@
 import datetime
 import plistlib
 from decimal import Decimal
+from functools import partial
 
 import biplist
 from django.utils import dateparse, six
@@ -16,6 +17,7 @@ DATETIME_TYPES = (datetime.datetime, datetime.date, datetime.time)
 if hasattr(plistlib, 'dumps') and hasattr(plistlib, 'loads'):
 
     loads = plistlib.loads
+    dumps = partial(plistlib.dumps, fmt=plistlib.FMT_BINARY)
 
 else:
 
@@ -56,6 +58,9 @@ else:
     def loads(stream):
         return RFPlistParser().parse(stream)
 
+    def dumps(stream):
+        return biplist.writePlistToString(_clean(data))
+
 
 def read(stream):
     if not isinstance(stream, six.BytesIO):
@@ -81,4 +86,4 @@ def write(data):
         else:
             return obj
 
-    return biplist.writePlistToString(_clean(data))
+    return dumps(_clean(data))
