@@ -38,9 +38,9 @@ Add the renderer and/or parser provided by this package to your settings, as
 described in the django-rest-framework documentation:
 
 - `Setting the renderer 
-  <http://django-rest-framework.org/api-guide/renderers.html#setting-the-renderers>`_.
+  <http://www.django-rest-framework.org/api-guide/renderers/#setting-the-renderers>`_.
 - `Setting the parser 
-  <http://django-rest-framework.org/api-guide/parsers.html#setting-the-parsers>`_.
+  <http://www.django-rest-framework.org/api-guide/parsers/#setting-the-parsers>`_.
 
 
 +----------------------------------------+-------------------------+
